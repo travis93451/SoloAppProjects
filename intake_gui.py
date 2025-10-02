@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, time
 
 st.set_page_config(page_title="Max Hall Solutions Load Intake", layout="wide")
 
-# ---------------------- THEME / CSS ----------------------
+# ===================== THEME / CSS =====================
 st.markdown(
     """
     <style>
@@ -24,36 +24,19 @@ st.markdown(
 
     /* ---------- Design tokens ---------- */
     :root{
-      --mh-bg: #FFFFFF;        /* input background */
-      --mh-fg: #000000;        /* input text */
-      --mh-border: #FFD700;    /* default border */
+      --mh-bg: #FFFFFF;          /* input background */
+      --mh-fg: #000000;          /* input text */
+      --mh-border: #FFD700;      /* default border */
       --mh-border-focus:#FFEA00; /* focus border */
       --mh-radius: 6px;
       --mh-shadow: 0 4px 8px rgba(0,0,0,.28);
-      --mh-placeholder:#6B7280; /* gray-500 */
+      --mh-placeholder:#6B7280;  /* gray-500 */
       --mh-label:#F9FAFB;        /* label text (near-white) */
     }
 
-    /* ---------- Form labels (desktop & mobile) ---------- */
-    .stApp label{
-      color: var(--mh-label) !important;
-      font-weight: 600;
-      text-shadow: 0 1px 4px rgba(0,0,0,.55);
-      letter-spacing:.1px;
-    }
-    @media (max-width: 640px){
-      .stApp label{
-        color:#FFFFFF !important;
-        text-shadow: 0 0 8px rgba(0,0,0,.85);
-      }
-    }
-
-    /* Placeholder color */
-    input::placeholder, textarea::placeholder{ color: var(--mh-placeholder); opacity:1; }
-
     /* ---------- Title ---------- */
     .app-title{
-        font-size: 2.5em;
+        font-size: 2.6em;
         text-align:center;
         margin-bottom: 20px;
         font-weight: 800;
@@ -67,10 +50,27 @@ st.markdown(
         100%{ text-shadow: 0 0 10px #FFD700, 0 0 22px #FFEA00; }
     }
 
+    /* ---------- Labels (desktop & mobile) ---------- */
+    .stApp label{
+      color: var(--mh-label) !important;
+      font-weight: 600;
+      text-shadow: 0 1px 4px rgba(0,0,0,.55);
+      letter-spacing:.1px;
+    }
+    @media (max-width: 640px){
+      .stApp label{
+        color:#FFFFFF !important;
+        text-shadow: 0 0 8px rgba(0,0,0,.85);
+      }
+    }
+
+    /* ---------- Placeholders ---------- */
+    input::placeholder, textarea::placeholder{
+      color: var(--mh-placeholder); opacity:1;
+    }
+
     /* ---------- UNIFIED FIELD STYLE ----------
-       Make ALL widgets (text, number, date, time, textarea, select)
-       look identical: white bg, black text, gold border.             */
-    /* Text, Number, Date, Time, Textarea inputs */
+       Text, Number, Date, Time, Textarea, Select all look identical */
     [data-testid="stTextInput"] input,
     [data-testid="stNumberInput"] input,
     [data-testid="stDateInput"] input,
@@ -84,25 +84,25 @@ st.markdown(
       animation: breathingGlow 3s infinite ease-in-out;
     }
 
-    /* BaseWeb select/time picker container (ensures same look) */
+    /* BaseWeb select/time select container */
     [data-baseweb="select"]{
       background-color: var(--mh-bg) !important;
       color: var(--mh-fg) !important;
       border: 2px solid var(--mh-border) !important;
       border-radius: var(--mh-radius) !important;
       box-shadow: var(--mh-shadow) !important;
+      animation: breathingGlow 3s infinite ease-in-out;
     }
-    /* Inner pieces of BaseWeb select */
+    /* Inner text/icons of BaseWeb select */
     [data-baseweb="select"] *{
       color: var(--mh-fg) !important;
       background-color: transparent !important;
     }
-    /* The visible value area */
     [data-baseweb="select"] > div{
       background-color: var(--mh-bg) !important;
     }
 
-    /* Focus states (all fields) */
+    /* Focus states (everything) */
     [data-testid="stTextInput"] input:focus,
     [data-testid="stNumberInput"] input:focus,
     [data-testid="stDateInput"] input:focus,
@@ -116,20 +116,18 @@ st.markdown(
 
     /* Number stepper buttons */
     [data-testid="stNumberInput"] button{
-      background-color:#111827 !important; /* near-black */
+      background-color:#111827 !important;
       color:#FFD700 !important;
       border:1px solid var(--mh-border) !important;
       border-radius:4px !important;
       transition: all .25s ease;
     }
     [data-testid="stNumberInput"] button:hover{
-      background-color:#FFD700 !important;
-      color:#111827 !important;
-      box-shadow:0 0 10px #FFD700 !important;
-      transform: scale(1.08);
+      background-color:#FFD700 !important; color:#111827 !important;
+      box-shadow:0 0 10px #FFD700 !important; transform: scale(1.08);
     }
 
-    /* Dropdown menu items (list) */
+    /* Dropdown menu items list */
     [data-baseweb="select"] li{
       background-color:#FFFFFF !important;
       color:#000000 !important;
@@ -149,7 +147,7 @@ st.markdown(
     @keyframes pulseGlow{ 0%{box-shadow:0 0 0 var(--mh-border-focus);} 50%{box-shadow:0 0 18px var(--mh-border-focus);} 100%{box-shadow:0 0 8px var(--mh-border-focus);} }
     @keyframes breathingGlow{ 0%,100%{ box-shadow:0 0 5px #FFD700; } 50%{ box-shadow:0 0 14px #FFEA00; } }
 
-    /* Forms container */
+    /* ---------- Form card ---------- */
     .stForm{
       background-color: rgba(0,0,0,0.45);
       padding: 20px; border-radius: 10px;
@@ -157,14 +155,14 @@ st.markdown(
       backdrop-filter: blur(2px);
     }
 
-    /* Success & error messages */
+    /* ---------- Messages ---------- */
     .stSuccess,.stError{
       background-color: rgba(0,0,0,0.55);
       color:#FFF; border:2px solid #FFD700; border-radius:6px;
       padding:10px; box-shadow: var(--mh-shadow);
     }
 
-    /* Buttons */
+    /* ---------- Buttons ---------- */
     @keyframes buttonPulse{ 0%,100%{transform:scale(1); box-shadow:0 0 20px #FFD700;} 50%{transform:scale(1.05); box-shadow:0 0 40px #FFEA00;} }
 
     [data-testid="stFormSubmitButton"] > button{
@@ -172,22 +170,20 @@ st.markdown(
       border:3px solid #FFD700; border-radius:14px;
       padding:18px 44px; font-size:1.35em; font-weight:800;
       text-transform:uppercase; width:100%;
+      margin-top:20px;
       box-shadow: 0 0 20px #FFD700, inset 0 0 10px rgba(255,215,0,.45);
-      transition: all .25s ease; margin-top:20px;
-      animation: buttonPulse 4s infinite;
+      transition: all .25s ease; animation: buttonPulse 4s infinite;
     }
     [data-testid="stFormSubmitButton"] > button:hover{
       background:#FFD700; color:#111827;
-      box-shadow:0 0 34px #FFD700, 0 0 54px #FFEA00;
-      transform: scale(1.05) rotate(1deg);
+      box-shadow:0 0 34px #FFD700, 0 0 54px #FFEA00; transform: scale(1.05) rotate(1deg);
     }
 
     [data-testid="stButton"] > button{
       background-color:#111827; color:#FFFFFF;
       border:2px solid #FFD700; border-radius:10px;
       padding:12px 30px; font-size:1.05em; font-weight:700;
-      margin-top:15px; transition: all .25s ease;
-      animation: buttonPulse 5s infinite;
+      margin-top:15px; transition: all .25s ease; animation: buttonPulse 5s infinite;
     }
     [data-testid="stButton"] > button:hover{
       background:#FFD700; color:#111827;
@@ -198,17 +194,17 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# ---------------------- TITLE ----------------------
+# ===================== TITLE =====================
 st.markdown('<div class="app-title">Max Hall Solutions Load Intake 🚛</div>', unsafe_allow_html=True)
 
-# ---------------------- AUTH STATE ----------------------
+# ===================== AUTH STATE =====================
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
     st.session_state.username = None
 if "login_failed" not in st.session_state:
     st.session_state.login_failed = False
 
-# ---------------------- LOGIN VIEW ----------------------
+# ===================== LOGIN VIEW =====================
 if not st.session_state.logged_in:
     with st.form("login_form", clear_on_submit=False):
         username = st.text_input("Username")
@@ -225,7 +221,7 @@ if not st.session_state.logged_in:
             st.session_state.login_failed = True
             st.error("Invalid username or password!")
 
-# ---------------------- APP VIEW ----------------------
+# ===================== APP VIEW =====================
 else:
     with st.form("load_form", clear_on_submit=True):
         col1, col2 = st.columns(2)
@@ -262,17 +258,21 @@ else:
             """
             msg = MIMEText(body)
             msg['Subject'] = f"New Load - {load_type}"
-            msg['From'] = "whitelyonslogistics@gmail.com"
-            msg['To'] = "whitelyonslogistics@gmail.com"
+            msg['From'] = st.secrets["email"]["user"]
+            msg['To'] = st.secrets["email"]["user"]
+
             try:
+                email_user = st.secrets["email"]["user"]
+                email_pass = st.secrets["email"]["password"]
+
                 server = smtplib.SMTP('smtp.gmail.com', 587)
                 server.starttls()
-                server.login("whitelyonslogistics@gmail.com", "eipoxkkifzhiwnlo")
+                server.login(email_user, email_pass)
                 server.send_message(msg)
                 server.quit()
                 st.success("✅ Load sent to Max Hall Solutions!")
             except Exception as e:
-                st.error(f"❌ Send failed: {str(e)}. Check app password.")
+                st.error(f"❌ Send failed: {str(e)}. Check app password and secrets.")
 
     if st.button("Logout"):
         st.session_state.logged_in = False
