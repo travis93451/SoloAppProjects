@@ -12,7 +12,7 @@ st.markdown(
     .stApp {
         background: 
             linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-            url("assets/abstract_bg.png");
+            url("https://raw.githubusercontent.com/travis93451/SoloAppProjects/main/assets/abstract_bg.png");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -23,7 +23,7 @@ st.markdown(
 
     :root {
       --mh-bg: #FFFFFF; /* White input background */
-      --mh-fg: #000000; /* Black input text for universal visibility */
+      --mh-fg: #000000; /* Black text for visibility */
       --mh-border: #FFD700;
       --mh-border-focus: #FFEA00;
       --mh-radius: 5px;
@@ -173,7 +173,7 @@ st.markdown(
     }
     .shake { animation: shake 0.5s; }
 
-    /* Success & error messages animation */
+    /* Success & error messages */
     .stSuccess, .stError {
         background-color: rgba(0, 0, 0, 0.5);
         color: #FFFFFF;
