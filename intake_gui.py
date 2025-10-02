@@ -10,7 +10,12 @@ st.markdown(
     """
     <style>
     .stApp {
-        background: linear-gradient(135deg, #1a1a2e, #16213e);
+        background: 
+            linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+            url("assets/abstract_bg.png");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
         color: #FFFFFF;
         font-family: 'Arial', sans-serif;
         padding: 20px;
@@ -23,7 +28,7 @@ st.markdown(
       --mh-border-focus: #FFEA00;
       --mh-radius: 5px;
       --mh-shadow: 0 4px 8px rgba(0,0,0,.3);
-      --mh-placeholder: #666666; /* Medium gray placeholder */
+      --mh-placeholder: #666666;
     }
 
     input::placeholder, textarea::placeholder {
@@ -48,7 +53,7 @@ st.markdown(
         100% { text-shadow: 0 0 10px #FFD700, 0 0 20px #FFEA00; }
     }
 
-    /* Inputs unified with breathing glow */
+    /* Inputs unified */
     [data-testid="stTextInput"] input,
     [data-testid="stNumberInput"] input,
     [data-testid="stDateInput"] input,
@@ -105,7 +110,7 @@ st.markdown(
       animation: pulseGlow 0.6s ease;
     }
 
-    /* Dropdown menu items (white background, black text) */
+    /* Dropdown menu items */
     [data-baseweb="select"] li {
       background-color: #FFFFFF !important;
       color: #000000 !important;
@@ -202,7 +207,7 @@ st.markdown(
         transform: scale(1.05) rotate(1deg);
     }
 
-    /* Login + Logout buttons (glow + pulse like send button) */
+    /* Login + Logout buttons */
     [data-testid="stButton"] > button {
         background-color: #1a1a2e;
         color: #FFFFFF;
