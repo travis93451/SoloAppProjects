@@ -9,9 +9,10 @@ st.set_page_config(page_title="Max Hall Solutions Load Intake", layout="wide")
 st.markdown(
     """
     <style>
+    /* ---------- App background ---------- */
     .stApp {
-        background: 
-            linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        background:
+            linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
             url("https://raw.githubusercontent.com/travis93451/SoloAppProjects/main/assets/abstract_bg.png");
         background-size: cover;
         background-position: center;
@@ -21,217 +22,176 @@ st.markdown(
         padding: 20px;
     }
 
-    :root {
-      --mh-bg: #FFFFFF; /* White input background */
-      --mh-fg: #000000; /* Black text for visibility */
-      --mh-border: #FFD700;
-      --mh-border-focus: #FFEA00;
-      --mh-radius: 5px;
-      --mh-shadow: 0 4px 8px rgba(0,0,0,.3);
-      --mh-placeholder: #666666;
+    /* ---------- Design tokens ---------- */
+    :root{
+      --mh-bg: #FFFFFF;        /* input background */
+      --mh-fg: #000000;        /* input text */
+      --mh-border: #FFD700;    /* default border */
+      --mh-border-focus:#FFEA00; /* focus border */
+      --mh-radius: 6px;
+      --mh-shadow: 0 4px 8px rgba(0,0,0,.28);
+      --mh-placeholder:#6B7280; /* gray-500 */
+      --mh-label:#F9FAFB;        /* label text (near-white) */
     }
 
-    input::placeholder, textarea::placeholder {
-      color: var(--mh-placeholder);
-      opacity: 1;
+    /* ---------- Form labels (desktop & mobile) ---------- */
+    .stApp label{
+      color: var(--mh-label) !important;
+      font-weight: 600;
+      text-shadow: 0 1px 4px rgba(0,0,0,.55);
+      letter-spacing:.1px;
+    }
+    @media (max-width: 640px){
+      .stApp label{
+        color:#FFFFFF !important;
+        text-shadow: 0 0 8px rgba(0,0,0,.85);
+      }
     }
 
-    /* Title styling */
-    .app-title {
+    /* Placeholder color */
+    input::placeholder, textarea::placeholder{ color: var(--mh-placeholder); opacity:1; }
+
+    /* ---------- Title ---------- */
+    .app-title{
         font-size: 2.5em;
-        text-align: center;
+        text-align:center;
         margin-bottom: 20px;
-        font-weight: bold;
-        color: #FFD700;
-        text-shadow: 0 0 10px #FFD700, 0 0 20px #FFEA00, 0 0 30px #FFEA00;
+        font-weight: 800;
+        color:#FFD700;
+        text-shadow: 0 0 10px #FFD700, 0 0 22px #FFEA00, 0 0 34px #FFEA00;
         animation: titleGlow 2s infinite alternate;
     }
-
-    @keyframes titleGlow {
-        0%   { text-shadow: 0 0 10px #FFD700, 0 0 20px #FFEA00; }
-        50%  { text-shadow: 0 0 20px #FFD700, 0 0 40px #FFEA00, 0 0 60px #FFEA00; }
-        100% { text-shadow: 0 0 10px #FFD700, 0 0 20px #FFEA00; }
+    @keyframes titleGlow{
+        0%{ text-shadow: 0 0 10px #FFD700, 0 0 22px #FFEA00; }
+        50%{ text-shadow: 0 0 20px #FFD700, 0 0 42px #FFEA00, 0 0 60px #FFEA00; }
+        100%{ text-shadow: 0 0 10px #FFD700, 0 0 22px #FFEA00; }
     }
 
-    /* Inputs unified */
+    /* ---------- UNIFIED FIELD STYLE ----------
+       Make ALL widgets (text, number, date, time, textarea, select)
+       look identical: white bg, black text, gold border.             */
+    /* Text, Number, Date, Time, Textarea inputs */
     [data-testid="stTextInput"] input,
     [data-testid="stNumberInput"] input,
     [data-testid="stDateInput"] input,
     [data-testid="stTimeInput"] input,
-    [data-testid="stTextArea"] textarea {
-      background-color: var(--mh-bg);
-      color: var(--mh-fg);
-      border: 2px solid var(--mh-border);
-      border-radius: var(--mh-radius);
-      box-shadow: var(--mh-shadow);
+    [data-testid="stTextArea"] textarea{
+      background-color: var(--mh-bg) !important;
+      color: var(--mh-fg) !important;
+      border: 2px solid var(--mh-border) !important;
+      border-radius: var(--mh-radius) !important;
+      box-shadow: var(--mh-shadow) !important;
       animation: breathingGlow 3s infinite ease-in-out;
     }
 
+    /* BaseWeb select/time picker container (ensures same look) */
+    [data-baseweb="select"]{
+      background-color: var(--mh-bg) !important;
+      color: var(--mh-fg) !important;
+      border: 2px solid var(--mh-border) !important;
+      border-radius: var(--mh-radius) !important;
+      box-shadow: var(--mh-shadow) !important;
+    }
+    /* Inner pieces of BaseWeb select */
+    [data-baseweb="select"] *{
+      color: var(--mh-fg) !important;
+      background-color: transparent !important;
+    }
+    /* The visible value area */
+    [data-baseweb="select"] > div{
+      background-color: var(--mh-bg) !important;
+    }
+
+    /* Focus states (all fields) */
     [data-testid="stTextInput"] input:focus,
     [data-testid="stNumberInput"] input:focus,
     [data-testid="stDateInput"] input:focus,
     [data-testid="stTimeInput"] input:focus,
-    [data-testid="stTextArea"] textarea:focus {
-      border-color: var(--mh-border-focus);
-      box-shadow: 0 0 15px var(--mh-border-focus);
-      animation: pulseGlow 0.6s ease;
+    [data-testid="stTextArea"] textarea:focus,
+    [data-baseweb="select"]:focus-within{
+      border-color: var(--mh-border-focus) !important;
+      box-shadow: 0 0 15px var(--mh-border-focus) !important;
+      animation: pulseGlow .6s ease;
     }
 
-    /* Number spinner buttons */
-    [data-testid="stNumberInput"] button {
-      background-color: #1a1a2e !important;
-      color: #FFD700 !important;
-      border: 1px solid var(--mh-border);
-      border-radius: 4px;
-      transition: all 0.3s ease;
+    /* Number stepper buttons */
+    [data-testid="stNumberInput"] button{
+      background-color:#111827 !important; /* near-black */
+      color:#FFD700 !important;
+      border:1px solid var(--mh-border) !important;
+      border-radius:4px !important;
+      transition: all .25s ease;
     }
-    [data-testid="stNumberInput"] button:hover {
-      background-color: #FFD700 !important;
-      color: #1a1a2e !important;
-      box-shadow: 0 0 10px #FFD700;
-      transform: scale(1.1);
-    }
-
-    /* Selectboxes & TimePickers */
-    [data-testid="stSelectbox"] div[data-baseweb="select"],
-    [data-testid="stTimeInput"] div[data-baseweb="select"] {
-      background-color: var(--mh-bg);
-      color: var(--mh-fg);
-      border: 2px solid var(--mh-border);
-      border-radius: var(--mh-radius);
-      box-shadow: var(--mh-shadow);
-      transition: all 0.3s ease;
-      animation: breathingGlow 3s infinite ease-in-out;
-    }
-    [data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within,
-    [data-testid="stTimeInput"] div[data-baseweb="select"]:focus-within {
-      border-color: var(--mh-border-focus);
-      box-shadow: 0 0 15px var(--mh-border-focus);
-      animation: pulseGlow 0.6s ease;
+    [data-testid="stNumberInput"] button:hover{
+      background-color:#FFD700 !important;
+      color:#111827 !important;
+      box-shadow:0 0 10px #FFD700 !important;
+      transform: scale(1.08);
     }
 
-    /* Dropdown menu items */
-    [data-baseweb="select"] li {
-      background-color: #FFFFFF !important;
-      color: #000000 !important;
-      opacity: 0;
-      transform: translateY(-10px);
-      animation: dropdownFade 0.25s ease forwards;
+    /* Dropdown menu items (list) */
+    [data-baseweb="select"] li{
+      background-color:#FFFFFF !important;
+      color:#000000 !important;
+      opacity:0; transform: translateY(-8px);
+      animation: dropdownFade .22s ease forwards;
     }
-    [data-baseweb="select"] li:hover {
-      background-color: #FFD700 !important;
-      color: #000000 !important;
+    [data-baseweb="select"] li:hover{
+      background-color:#FFD700 !important; color:#000000 !important;
     }
-    [data-baseweb="select"] li[aria-selected="true"] {
-      background-color: #FFD700 !important;
-      color: #000000 !important;
-      font-weight: bold;
+    [data-baseweb="select"] li[aria-selected="true"]{
+      background-color:#FFD700 !important; color:#000000 !important;
+      font-weight:700;
     }
 
     /* Animations */
-    @keyframes dropdownFade {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes pulseGlow {
-      0%   { box-shadow: 0 0 0px var(--mh-border-focus); }
-      50%  { box-shadow: 0 0 20px var(--mh-border-focus); }
-      100% { box-shadow: 0 0 10px var(--mh-border-focus); }
-    }
-    @keyframes breathingGlow {
-      0%, 100% { box-shadow: 0 0 5px #FFD700; }
-      50% { box-shadow: 0 0 15px #FFEA00; }
-    }
-    @keyframes fadeZoomIn {
-      0%   { opacity: 0; transform: scale(0.9); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(50px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-8px); }
-      50% { transform: translateX(8px); }
-      75% { transform: translateX(-8px); }
-      100% { transform: translateX(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes buttonPulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 20px #FFD700; }
-      50% { transform: scale(1.05); box-shadow: 0 0 40px #FFEA00; }
-    }
+    @keyframes dropdownFade{ from{opacity:0; transform:translateY(-8px);} to{opacity:1; transform:translateY(0);} }
+    @keyframes pulseGlow{ 0%{box-shadow:0 0 0 var(--mh-border-focus);} 50%{box-shadow:0 0 18px var(--mh-border-focus);} 100%{box-shadow:0 0 8px var(--mh-border-focus);} }
+    @keyframes breathingGlow{ 0%,100%{ box-shadow:0 0 5px #FFD700; } 50%{ box-shadow:0 0 14px #FFEA00; } }
 
-    /* Login + Load forms animation */
-    [data-testid="stForm"][aria-label="login_form"],
-    [data-testid="stForm"][aria-label="load_form"] {
-        animation: fadeZoomIn 0.8s ease;
+    /* Forms container */
+    .stForm{
+      background-color: rgba(0,0,0,0.45);
+      padding: 20px; border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.55);
+      backdrop-filter: blur(2px);
     }
-    .shake { animation: shake 0.5s; }
 
     /* Success & error messages */
-    .stSuccess, .stError {
-        background-color: rgba(0, 0, 0, 0.5);
-        color: #FFFFFF;
-        border: 2px solid #FFD700;
-        border-radius: 5px;
-        padding: 10px;
-        box-shadow: var(--mh-shadow);
-        animation: slideInRight 0.6s ease;
+    .stSuccess,.stError{
+      background-color: rgba(0,0,0,0.55);
+      color:#FFF; border:2px solid #FFD700; border-radius:6px;
+      padding:10px; box-shadow: var(--mh-shadow);
     }
 
-    /* Send button */
-    [data-testid="stFormSubmitButton"] > button {
-        background-color: #1a1a2e;
-        color: #FFFFFF;
-        border: 3px solid #FFD700;
-        border-radius: 15px;
-        padding: 20px 50px;
-        font-size: 1.5em;
-        font-weight: bold;
-        box-shadow: 0 0 20px #FFD700, inset 0 0 10px rgba(255, 215, 0, 0.5);
-        transition: all 0.3s ease;
-        width: 100%;
-        margin-top: 20px;
-        text-transform: uppercase;
-        animation: buttonPulse 4s infinite;
+    /* Buttons */
+    @keyframes buttonPulse{ 0%,100%{transform:scale(1); box-shadow:0 0 20px #FFD700;} 50%{transform:scale(1.05); box-shadow:0 0 40px #FFEA00;} }
+
+    [data-testid="stFormSubmitButton"] > button{
+      background-color:#111827; color:#FFFFFF;
+      border:3px solid #FFD700; border-radius:14px;
+      padding:18px 44px; font-size:1.35em; font-weight:800;
+      text-transform:uppercase; width:100%;
+      box-shadow: 0 0 20px #FFD700, inset 0 0 10px rgba(255,215,0,.45);
+      transition: all .25s ease; margin-top:20px;
+      animation: buttonPulse 4s infinite;
     }
-    [data-testid="stFormSubmitButton"] > button:hover {
-        background-color: #FFD700;
-        color: #1a1a2e;
-        box-shadow: 0 0 30px #FFD700, 0 0 50px #FFEA00;
-        transform: scale(1.05) rotate(1deg);
+    [data-testid="stFormSubmitButton"] > button:hover{
+      background:#FFD700; color:#111827;
+      box-shadow:0 0 34px #FFD700, 0 0 54px #FFEA00;
+      transform: scale(1.05) rotate(1deg);
     }
 
-    /* Login + Logout buttons */
-    [data-testid="stButton"] > button {
-        background-color: #1a1a2e;
-        color: #FFFFFF;
-        border: 2px solid #FFD700;
-        border-radius: 10px;
-        padding: 12px 30px;
-        font-size: 1.1em;
-        font-weight: bold;
-        margin-top: 15px;
-        animation: buttonPulse 5s infinite;
-        transition: all 0.3s ease;
+    [data-testid="stButton"] > button{
+      background-color:#111827; color:#FFFFFF;
+      border:2px solid #FFD700; border-radius:10px;
+      padding:12px 30px; font-size:1.05em; font-weight:700;
+      margin-top:15px; transition: all .25s ease;
+      animation: buttonPulse 5s infinite;
     }
-    [data-testid="stButton"] > button:hover {
-        background-color: #FFD700;
-        color: #1a1a2e;
-        box-shadow: 0 0 20px #FFD700, 0 0 40px #FFEA00;
-        transform: scale(1.05);
-    }
-
-    .stForm {
-        background-color: rgba(0, 0, 0, 0.5);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    [data-testid="stButton"] > button:hover{
+      background:#FFD700; color:#111827;
+      box-shadow:0 0 22px #FFD700, 0 0 40px #FFEA00; transform: scale(1.05);
     }
     </style>
     """,
@@ -250,15 +210,10 @@ if "login_failed" not in st.session_state:
 
 # ---------------------- LOGIN VIEW ----------------------
 if not st.session_state.logged_in:
-    form_class = "shake" if st.session_state.login_failed else ""
-    st.markdown(f"""<div class="{form_class}">""", unsafe_allow_html=True)
-
     with st.form("login_form", clear_on_submit=False):
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
         submitted = st.form_submit_button("Login")
-
-    st.markdown("</div>", unsafe_allow_html=True)
 
     if submitted:
         if username == "sample_customer" and password == "SamplePass2025!":
